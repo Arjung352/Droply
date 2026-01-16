@@ -7,14 +7,14 @@ if (!process.env.DATABASE_URL) {
   throw new Error("Database url is not set");
 }
 export default defineConfig({
-  out: "./drizzle",
   schema: "./lib/db/schema.ts",
+  out: "./drizzle",
   dialect: "postgresql",
   dbCredentials: {
     url: process.env.DATABASE_URL!,
   },
   migrations: {
-    table: "__drizzle_migration",
+    table: "__drizzle_migrations",
     schema: "public",
   },
   verbose: true,
