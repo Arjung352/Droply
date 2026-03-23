@@ -1,39 +1,20 @@
-import { auth0 } from "@/lib/auth0";
-import LoginButton from "@/components/LoginButton";
-import LogoutButton from "@/components/LogoutButton";
-import Profile from "@/components/Profile";
-
+import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 export default async function Home() {
-  const session = await auth0.getSession();
-  const user = session?.user;
-
   return (
-    <div className="app-container">
-      <div className="main-card-wrapper">
-        <img
-          src="https://cdn.auth0.com/quantum-assets/dist/latest/logos/auth0/auth0-lockup-en-ondark.png"
-          alt="Auth0 Logo"
-          className="auth0-logo"
-        />
-        <h1 className="main-title">Next.js + Auth0</h1>
-
-        <div className="action-card">
-          {user ? (
-            <div className="logged-in-section">
-              <p className="logged-in-message">✅ Successfully logged in!</p>
-              <Profile />
-              <LogoutButton />
-            </div>
-          ) : (
-            <>
-              <p className="action-text">
-                Welcome! Please log in to access your protected content.
-              </p>
-              <LoginButton />
-            </>
-          )}
-        </div>
-      </div>
+    <div className="">
+      <header className="flex justify-center items-center p-4 gap-4 h-16">
+        <Show when="signed-out">
+          <SignInButton />
+          <SignUpButton>
+            <button className="bg-[#6c47ff] text-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
+              Sign Up
+            </button>
+          </SignUpButton>
+        </Show>
+        <Show when="signed-in">
+          <UserButton />
+        </Show>
+      </header>
     </div>
   );
 }
